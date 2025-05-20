@@ -1,0 +1,44 @@
+﻿@model List<ToDoList.Models.Todo>
+@{
+    ViewData["Title"] = "To-Do List";
+}
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+<h2>To-Do List</h2>
+
+<form id="todoForm">
+    <input id="title" placeholder="Title" required />
+    <input id="description" placeholder="Description" />
+    <input id="startDate" type="date" />
+    <input id="endDate" type="date" />
+    <button type="submit">Add</button>
+</form>
+
+<table>
+    <thead>
+        <tr><th>Title</th><th>Description</th><th>Start</th><th>End</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody id="todoTableBody">
+        @foreach (var todo in Model)
+        {
+            <tr>
+                <td>@todo.Title</td>
+                <td>@todo.Description</td>
+                <td>@todo.StartDate?.ToShortDateString()</td>
+                <td>@todo.EndDate?.ToShortDateString()</td>
+                <td>@(todo.IsCompleted ? "Completed" : "Pending")</td>
+                <td>
+                    @if (!todo.IsCompleted)
+                    {
+                        <button class="mark-complete" data-id="@todo.Id">Mark as Completed</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/todo.js"></script>
+}
